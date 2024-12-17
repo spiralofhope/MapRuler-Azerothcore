@@ -1,4 +1,4 @@
-## Interface: 70200
+## Interface: 70300
 ## Title: Map Ruler
 ## Version: 1.1.12
 ## Author: Itminan 
