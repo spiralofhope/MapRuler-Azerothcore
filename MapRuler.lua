@@ -1,6 +1,5 @@
 local dots = {} --stores all the dot textures.  Each dot is a separate texture
 local dotSpacing = 9 --the blank space between dots
-local dotSize = 3
 local playerX = 0
 local playerY = 0
 local playerFacing = 0
@@ -19,9 +18,12 @@ function MapRulerFrame_Init(self)
 	maxLineLength = math.sqrt(((WorldMapDetailFrame:GetHeight()) ^ 2) + ((WorldMapDetailFrame:GetWidth()) ^ 2))
 	
 	--setup the textures once and only once
-	createDots(self)
-end --MapRulerFrame_Init()
+	for i = 0, maxLineLength, dotSpacing do
+		dots[i] = self:CreateTexture()
 
+	end --for
+	
+end --MapRulerFrame_Init()
 
 
 --fires on frame update
@@ -51,15 +53,8 @@ function MapRuler_OnUpdate(self, elapsed)
 			showLine(self, percentX * self:GetWidth(), percentY * self:GetHeight() * -1, angle)
 		end --inner if
 		timeSinceLastUpdate = 0 --the interval was achived so reset it
-	else --the player is not on the current map
-		--/******************************************
-		--Need to make sure the player is not on the current map or map overlay 
-		--If you look at the map then view another zone, it still shows the line
-		--1)View map
-		--2)Open quest log
-		--3)click on quest that is not in the current zone.
-		--4)... line is still there.
-		
+	else --top if
+		--Make sure the player is not on the current map or in an instance
 		if ((percentX == 0 and percentY == 0) or not GetPlayerFacing()) then
 			hideLine()
 		end
@@ -68,29 +63,19 @@ function MapRuler_OnUpdate(self, elapsed)
 end --MapRuler_OnUpdate()
 
 
---Creates the dot textures
-function createDots(parentFrame)
-	for i = 0, maxLineLength, dotSpacing do
-		dots[i] = parentFrame:CreateTexture()
-		dots[i]:SetHeight(dotSize)
-		dots[i]:SetWidth(dotSize)
-		dots[i]:SetColorTexture(0,0,0)
-		dots[i]:SetAlpha(.5)
-	end --for
-	
-end --createDots()
-
-
 --Places the dots on the line
 function showLine(parentFrame, startX, startY, angle)
-	
 	--set the values here so I'm not calculating them for each dot
 	xComponent = math.cos(angle) -- x-component of the vector
 	yComponent = math.sin(angle) -- ycomponent of the vector
 	
 	for i = 0, maxLineLength, dotSpacing do
-		dots[i]:SetAlpha(.5)
+		dots[i]:SetAlpha(MapRulerOptions["opacity"])
+		dots[i]:SetColorTexture(MapRulerOptions["red"],MapRulerOptions["green"],MapRulerOptions["blue"])
+		dots[i]:SetHeight(MapRulerOptions["size"])
+		dots[i]:SetWidth(MapRulerOptions["size"])
 		dots[i]:SetPoint("TOPLEFT", startX + (xComponent * i), startY + (yComponent * i))
+		
 	end --for
 
 end --line()

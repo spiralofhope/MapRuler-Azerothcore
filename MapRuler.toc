@@ -1,9 +1,12 @@
-## Interface: 70100
+## Interface: 70000
 ## Title: Map Ruler
-## Version: 0.1
+## Version: 1.1.0
 ## Author: Itminan (based on code from Willoisa, EU Wildhammer)
 ## Notes: Draws a line along your current direction on world map. Originally written by Willoisa on the EU Wildhammer server.
 
+## SavedVariables: MapRulerOptions
+
+MapRuler_Options.lua
 MapRuler.lua
 MapRuler.xml
 
