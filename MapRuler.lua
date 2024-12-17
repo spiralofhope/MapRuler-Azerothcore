@@ -1,5 +1,6 @@
 local dots = {} --stores all the dot textures.  Each dot is a separate texture
-local dotSpacing = 10 --the blank space between dots
+local dotSpacing = 9 --the blank space between dots
+local dotSize = 3
 local playerX = 0
 local playerY = 0
 local playerFacing = 0
@@ -22,23 +23,24 @@ function MapRulerFrame_Init(self)
 end --MapRulerFrame_Init()
 
 
+
 --fires on frame update
 function MapRuler_OnUpdate(self, elapsed) 
 
 	--incement the time
 	timeSinceLastUpdate = timeSinceLastUpdate + elapsed;
 
-	--only fire on the interval or if it's showing a continent or smaller zone
-	if (timeSinceLastUpdate > updateInterval) and (GetCurrentMapContinent() > 0) then
-		
-		local percentX, percentY = GetPlayerMapPosition("player") --returns the player position as a percentage from top left
+	local percentX, percentY = GetPlayerMapPosition("player") --returns the player position as a percentage from top left
+	
+	--only fire on the interval and if the player is on the current map
+	if (timeSinceLastUpdate > updateInterval) and (percentX ~= 0 and percentY ~= 0) then
 		
 		-- 0 is due north on the map 
 		-- have to add pi/2 to get back to where the player is pointed (angle in radians)
 		local angle = GetPlayerFacing() + (math.pi)/2  
 
 		--check to see if the player has moved or changed facing
-		if ((percentX ~= playerX or percentY ~= playerY or playerFacing ~= angle) and (percentX ~= 0 and percentY ~= 0)) then
+		if (percentX ~= playerX or percentY ~= playerY or playerFacing ~= angle) then
 			--save the current position and facing so we can compare it next time
 			playerX = percentX
 			playerY = percentY
@@ -50,7 +52,7 @@ function MapRuler_OnUpdate(self, elapsed)
 		end --inner if
 		timeSinceLastUpdate = 0 --the interval was achived so reset it
 	else 
-		if(GetCurrentMapContinent() < 1) then --we're looking at a continent or bigger
+		if(percentX == 0 and percentY == 0) then --the player is not on the current map
 			hideLine()
 		end
 	end --top if-else
@@ -62,8 +64,8 @@ end --MapRuler_OnUpdate()
 function createDots(parentFrame)
 	for i = 0, maxLineLength, dotSpacing do
 		dots[i] = parentFrame:CreateTexture()
-		dots[i]:SetHeight(3)
-		dots[i]:SetWidth(3)
+		dots[i]:SetHeight(dotSize)
+		dots[i]:SetWidth(dotSize)
 		dots[i]:SetColorTexture(0,0,0)
 		dots[i]:SetAlpha(.5)
 	end --for
