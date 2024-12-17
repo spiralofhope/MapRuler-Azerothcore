@@ -199,7 +199,7 @@ end --end setupSizeSlider()
 local function SizeBoxEnterPressed()
 
 	--only allow numbers from 0 to 10
-	local theNumber = tonumber(self:GetText())
+	local theNumber = tonumber(SizeBox:GetText())
 	if(theNumber > 10) then
 		theNumber = 10
 	end
@@ -208,18 +208,19 @@ local function SizeBoxEnterPressed()
 		theNumber = 0
 	end
 	
-	self:SetText(theNumber)
+	SizeBox:SetText(theNumber)
 	
-	--when the slider value is changed MapRulerOptions["opacity"] will be updated
+	--when the slider value is changed MapRulerOptions["size"] will be updated
 	SizeSlider:SetValue(theNumber)
-	self:ClearFocus()
+
+	SizeBox:ClearFocus()
 
 end --SizeBoxEnterPressed()
 
 
 local function setupSizeBox()
 	SizeBox:ClearAllPoints()
-	SizeBox:SetPoint("TOPLEFT", MROptionsFrame, "TOPLEFT", 220, -30)
+	
 	SizeBox:SetWidth(30)
 	SizeBox:SetHeight(20)
 	SizeBox:SetFontObject("GameFontHighlight")
@@ -239,10 +240,10 @@ local function setupSizeBox()
 	}
 	
 	SizeBox:SetBackdrop(backdrop)
+	SizeBox:SetPoint("TOPLEFT", MROptionsFrame, "TOPLEFT", 220, -30)
 	SizeBox:SetAutoFocus(false)
 	SizeBox:ClearFocus()
 	SizeBox:SetText(MapRulerOptions["size"])
-
 end --setupSizeBox()
 
 
