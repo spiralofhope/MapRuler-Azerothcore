@@ -41,8 +41,7 @@ end
 local function OpacityEditBoxEnterPressed(self)
 	-- Only allow numbers from 0 to 100:
 	local n = tonumber(self:GetText())
-	if( n > 100 )  then  n = 100  end
-	if( n <   0 )  then  n =   0  end
+  n = math.min( 100, math.max( 0, n ) )
 	self:SetText( n )
   
 	-- When the slider value is changed MapRulerOptions[ 'opacity' ] will be updated.
@@ -185,8 +184,7 @@ end
 local function SizeBoxEnterPressed()
 	-- Only allow numbers from 0 to 10:
 	local n = tonumber(SizeBox:GetText())
-	if( n > 10 ) then  n = 10  end
-	if( n <  0 ) then  n =  0  end
+  n = math.min( 10, math.max( 0, n ) )
 	SizeBox:SetText( n )
   
 	-- When the slider value is changed MapRulerOptions[ 'size' ] will be updated
