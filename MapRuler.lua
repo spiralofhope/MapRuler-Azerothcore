@@ -51,8 +51,16 @@ function MapRuler_OnUpdate(self, elapsed)
 			showLine(self, percentX * self:GetWidth(), percentY * self:GetHeight() * -1, angle)
 		end --inner if
 		timeSinceLastUpdate = 0 --the interval was achived so reset it
-	else 
-		if(percentX == 0 and percentY == 0) then --the player is not on the current map
+	else --the player is not on the current map
+		--/******************************************
+		--Need to make sure the player is not on the current map or map overlay 
+		--If you look at the map then view another zone, it still shows the line
+		--1)View map
+		--2)Open quest log
+		--3)click on quest that is not in the current zone.
+		--4)... line is still there.
+		
+		if ((percentX == 0 and percentY == 0) or not GetPlayerFacing()) then
 			hideLine()
 		end
 	end --top if-else
