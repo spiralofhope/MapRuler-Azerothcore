@@ -71,7 +71,9 @@ function showLine( parentFrame, startX, startY, angle )
 
 	for i = 0, maxLineLength, dotSpacing do
 		dots[i]:SetAlpha( MapRulerOptions[ 'opacity' ] )
-    dots[i]:SetColorTexture(MapRulerOptions["red"],MapRulerOptions["green"],MapRulerOptions["blue"])
+    -- spiralofhope fix for Azerothcore 3.3.5
+    dots[i]:SetTexture( 'Interface\\ChatFrame\\ChatFrameBackground' )
+    dots[i]:SetVertexColor( MapRulerOptions[ 'red' ], MapRulerOptions[ 'green' ], MapRulerOptions[ 'blue' ], 1 )
 		
 		dots[i]:SetHeight( MapRulerOptions[ 'size' ] )
 		dots[i]:SetWidth(  MapRulerOptions[ 'size' ] )
