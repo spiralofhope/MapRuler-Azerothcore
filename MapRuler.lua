@@ -33,7 +33,7 @@ function MapRuler_OnUpdate(self, elapsed)
 	local percentX, percentY = GetPlayerMapPosition("player") --returns the player position as a percentage from top left
 	
 	--only fire on the interval and if the player is on the current map
-	if (timeSinceLastUpdate > updateInterval) and (percentX ~= 0 and percentY ~= 0) then
+	if (timeSinceLastUpdate > updateInterval) and (percentX ~= 0 and percentY ~= 0) and GetPlayerFacing() then
 		
 		-- 0 is due north on the map 
 		-- have to add pi/2 to get back to where the player is pointed (angle in radians)
